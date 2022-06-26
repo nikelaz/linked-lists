@@ -22,5 +22,7 @@ int main() {
     i = i->getNext();
   }
 
+  std::cout << "item at [3]:" << list1->at(3)->getData() << std::endl;
+
   return 0;
 }
