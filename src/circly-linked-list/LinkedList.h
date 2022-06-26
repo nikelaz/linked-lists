@@ -2,12 +2,13 @@
 #include <memory.h>
 #include "Node.h"
 
-namespace Singly {
+namespace Circly {
   template <class T>
   class LinkedList
   {
     private:
       std::shared_ptr<Node<T>> head;
+      std::shared_ptr<Node<T>> tail;
     public:
       LinkedList();
 
@@ -46,25 +47,31 @@ namespace Singly {
   template<class T>
   void LinkedList<T>::push(T data) {
     std::shared_ptr<Node<T>> newNode(new Node<T>(data, head));
+
+    if (head == nullptr) {
+      tail = head = newNode;
+      return;
+    }
+
     head = newNode;
+    tail->setNext(newNode);
   }
 
   template<class T>
   void LinkedList<T>::insertAfter(std::shared_ptr<Node<T>> refNode, T data) {
     std::shared_ptr<Node<T>> newNode(new Node<T>(data, refNode->getNext()));
+
     refNode->setNext(newNode);
+
+    if (refNode == tail) tail = refNode;
   }
 
   template<class T>
   void LinkedList<T>::append(T data) {
-    std::shared_ptr<Node<T>> newNode(new Node<T>(data));
+    std::shared_ptr<Node<T>> newNode(new Node<T>(data, head));
 
-    std::shared_ptr<Node<T>> tmp(head);
-    while (tmp->getNext() != nullptr) {
-      tmp = tmp->getNext();
-    }
-
-    tmp->setNext(newNode);
+    tail->setNext(newNode);
+    tail = newNode;
   }
 
   template<class T>
@@ -73,7 +80,7 @@ namespace Singly {
 
     for (int i = 0; i < index; i++) {
       std::shared_ptr<Node<T>> next(tmp->getNext());
-      
+
       if (next == nullptr) return tmp;
 
       tmp = next;
@@ -85,23 +92,37 @@ namespace Singly {
   template<class T>
   void LinkedList<T>::pop() {
     if (head == nullptr) return;
+
     head = head->getNext();
+
+    if (head == nullptr) {
+      tail = nullptr;
+      return;
+    }
+
+    if (tail != nullptr) tail->setNext(head);
   }
 
   template<class T>
   void LinkedList<T>::removeTail() {
     std::shared_ptr<Node<T>> tmp(head);
-    while(tmp->getNext()->getNext() != nullptr) {
+    while(tmp->getNext()->getNext() != head) {
       tmp = tmp->getNext();
     }
 
-    tmp->setNext(nullptr);
+    tmp->setNext(head);
+    tail = tmp;
   }
 
   template<class T>
   void LinkedList<T>::removeNode(std::shared_ptr<Node<T>> node) {
-    if (node === head) {
+    if (node == head) {
       pop();
+      return;
+    }
+
+    if (node == tail) {
+      removeTail();
       return;
     }
 
@@ -115,6 +136,11 @@ namespace Singly {
 
   template<class T>
   void LinkedList<T>::removeAt(int index) {
+    if (index == 0) {
+      pop();
+      return;
+    }
+
     std::shared_ptr<Node<T>> tmp(head);
 
     for (int i = 0; i < index - 1; i++) {
@@ -122,7 +148,11 @@ namespace Singly {
       tmp = tmp->getNext();
     }
 
-    if (tmp->getNext() == nullptr) return;
+    std::shared_ptr<Node<T>> nextItem(tmp->getNext());
+
+    if (nextItem == nullptr) return;
+
+    if (nextItem == tail) tail = tmp;
 
     tmp->setNext(tmp->getNext()->getNext());
   }

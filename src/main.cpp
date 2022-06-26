@@ -4,6 +4,8 @@
 #include "./singly-linked-list/LinkedList.h"
 #include "./doubly-linked-list/Node.h"
 #include "./doubly-linked-list/LinkedList.h"
+#include "./circly-linked-list/Node.h"
+#include "./circly-linked-list/LinkedList.h"
 
 int main() {
   // Singly Linked List Demo
@@ -50,6 +52,24 @@ int main() {
   while (j != nullptr) {
     std::cout << j->getData() << std::endl;
     j = j->getPrev();
+  }
+
+
+  // Circly Linked List Demo
+  std::cout << "Circly Linked List Demo" << std::endl;
+
+  std::unique_ptr<Circly::LinkedList<int>> list3(new Circly::LinkedList<int>());
+
+  list3->push(1);
+  list3->push(2);
+  list3->push(3);
+
+  std::cout << "List items 2 times:" << std::endl;
+
+  std::shared_ptr<Circly::Node<int>> k(list3->getHead());
+  for (int l = 0; l < 6; l++) {
+    std::cout << k->getData() << std::endl;
+    k = k->getNext();
   }
 
   return 0;

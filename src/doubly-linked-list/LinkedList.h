@@ -109,8 +109,7 @@ namespace Doubly {
       tmp = tmp->getNext();
     }
 
-    std::shared_ptr<Node<T>> nptr(nullptr);
-    tmp->setNext(nptr);
+    tmp->setNext(nullptr);
   }
 
   template<class T>
