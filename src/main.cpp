@@ -2,6 +2,8 @@
 #include <memory.h>
 #include "./singly-linked-list/Node.h"
 #include "./singly-linked-list/LinkedList.h"
+#include "./doubly-linked-list/Node.h"
+#include "./doubly-linked-list/LinkedList.h"
 
 int main() {
   // Singly Linked List Demo
@@ -23,6 +25,33 @@ int main() {
   }
 
   std::cout << "item at [3]:" << list1->at(3)->getData() << std::endl;
+
+
+  // Doubly Linked List Demo
+  std::cout << "Doubly Linked List Demo" << std::endl;
+
+  std::unique_ptr<Doubly::LinkedList<int>> list2(new Doubly::LinkedList<int>());
+
+  list2->push(1);
+  list2->push(3);
+  list2->push(4);
+  list2->insertAfter(list2->getHead()->getNext(), 2);
+  list2->append(0);
+
+  std::cout << "List items backwards:" << std::endl;
+  
+  std::shared_ptr<Doubly::Node<int>> j(list2->getHead());
+
+  while (j->getNext() != nullptr) {
+    j = j->getNext();
+  }
+
+
+  while (j != nullptr) {
+    std::cout << j->getData() << std::endl;
+    j = j->getPrev();
+  }
+
 
   return 0;
 }
