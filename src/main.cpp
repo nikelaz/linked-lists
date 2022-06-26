@@ -33,10 +33,11 @@ int main() {
   std::unique_ptr<Doubly::LinkedList<int>> list2(new Doubly::LinkedList<int>());
 
   list2->push(1);
+  list2->push(2);
+  list2->push(2);
+  list2->pop(); 
   list2->push(3);
   list2->push(4);
-  list2->insertAfter(list2->getHead()->getNext(), 2);
-  list2->append(0);
 
   std::cout << "List items backwards:" << std::endl;
   
@@ -46,12 +47,10 @@ int main() {
     j = j->getNext();
   }
 
-
   while (j != nullptr) {
     std::cout << j->getData() << std::endl;
     j = j->getPrev();
   }
-
 
   return 0;
 }

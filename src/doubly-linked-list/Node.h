@@ -35,8 +35,8 @@ namespace Doubly {
   template <class T>
   Node<T>::Node(T inputData) {
     data = inputData;
-    next = nullptr;
     prev = nullptr;
+    next = nullptr;
   }
 
   template <class T>

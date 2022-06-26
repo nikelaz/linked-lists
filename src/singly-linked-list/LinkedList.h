@@ -84,6 +84,7 @@ namespace Singly {
 
   template<class T>
   void LinkedList<T>::pop() {
+    if (head == nullptr) return;
     head = head->getNext();
   }
 

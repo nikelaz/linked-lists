@@ -23,6 +23,18 @@ namespace Doubly {
       // Retrieve a node at index
       std::shared_ptr<Node<T>> at(int);
 
+      // Remove the node at head (first node)
+      void pop();
+
+      // Remove the last node (tail node)
+      void removeTail();
+
+      // Remove a specific node from the list
+      void removeNode(std::shared_ptr<Node<T>>);
+
+      // Remove a node at index from the list
+      void removeAt(int);
+
       std::shared_ptr<Node<T>> getHead();
   };
 
@@ -36,9 +48,7 @@ namespace Doubly {
     std::shared_ptr<Node<T>> newNode(new Node<T>(data));
     newNode->setNext(head);
 
-    if (head != nullptr) {
-    head->setPrev(newNode);
-    }
+    if (head != nullptr) head->setPrev(newNode);
 
     head = newNode;
   }
@@ -77,6 +87,53 @@ namespace Doubly {
     }
 
     return tmp;
+  }
+
+  template<class T>
+  void LinkedList<T>::pop() {
+    if (head == nullptr) return;
+    std::shared_ptr<Node<T>> nextItem(head->getNext());
+
+    if (nextItem == nullptr) {
+      head = nullptr;
+      return;
+    }
+    
+    head = nextItem;
+  }
+
+  template<class T>
+  void LinkedList<T>::removeTail() {
+    std::shared_ptr<Node<T>> tmp(head);
+    while(tmp->getNext()->getNext() != nullptr) {
+      tmp = tmp->getNext();
+    }
+
+    std::shared_ptr<Node<T>> nptr(nullptr);
+    tmp->setNext(nptr);
+  }
+
+  template<class T>
+  void LinkedList<T>::removeNode(std::shared_ptr<Node<T>> node) {
+    std::shared_ptr<Node<T>> prevNode(node->getPrev());
+    std::shared_ptr<Node<T>> nextNode(node->getNext());
+
+    if (prevNode != nullptr) prevNode->setNext(nextNode);
+    if (nextNode != nullptr) nextNode->setPrev(prevNode);
+  }
+
+  template<class T>
+  void LinkedList<T>::removeAt(int index) {
+    std::shared_ptr<Node<T>> tmp(head);
+
+    for (int i = 0; i < index; i++) {
+      if (tmp == nullptr) return;
+      tmp = tmp->getNext();
+    }
+
+    if (tmp->getNext() == nullptr) return;
+
+    removeNode(tmp);
   }
 
   template<class T>
