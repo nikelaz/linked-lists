@@ -13,6 +13,7 @@ int main() {
   list1->push(3);
   list1->push(4);
   list1->insertAfter(list1->getHead()->getNext(), 2);
+  list1->append(0);
 
   std::shared_ptr<Singly::Node<int>> i(list1->getHead());
 

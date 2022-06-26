@@ -39,14 +39,14 @@ namespace Singly {
   // Insert a node at the end of the list
   template<class T>
   void LinkedList<T>::append(T data) {
-    Node<T>* newNode = new Node<T>(data);
+    std::shared_ptr<Node<T>> newNode(new Node<T>(data));
 
-    Node<T>* tmp = head;
-    while (tmp->getNext() !== nullptr) {
-      tmp->getNext();
+    std::shared_ptr<Node<T>> tmp(head);
+    while (tmp->getNext() != nullptr) {
+      tmp = tmp->getNext();
     }
 
-    tmp.setNext(newNode);
+    tmp->setNext(newNode);
   }
 
   template<class T>
