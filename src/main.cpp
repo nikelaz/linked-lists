@@ -40,6 +40,7 @@ int main() {
   list2->pop(); 
   list2->push(3);
   list2->push(4);
+  list2->append(0);
 
   std::cout << "List items backwards:" << std::endl;
   
