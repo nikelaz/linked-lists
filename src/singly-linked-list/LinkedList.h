@@ -100,7 +100,7 @@ namespace Singly {
 
   template<class T>
   void LinkedList<T>::removeNode(std::shared_ptr<Node<T>> node) {
-    if (node === head) {
+    if (node == head) {
       pop();
       return;
     }
